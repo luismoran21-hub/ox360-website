@@ -26,6 +26,35 @@ h1{font-size:66px;line-height:1.03;letter-spacing:-2.8px;margin:0 0 25px;max-wid
 .access{grid-template-columns:.78fr 1.22fr} ul{padding:0;list-style:none;color:var(--muted);font-size:17px;line-height:2} li:before{content:"✓";color:var(--green);margin-right:13px}
 footer{padding:28px 0 38px;display:flex;justify-content:space-between;color:#a7beb7;font-size:13px;letter-spacing:2px}
 @media(max-width:900px){.hero,.split,.access{grid-template-columns:1fr}.hero{padding-top:30px}.logo{margin-bottom:38px}.logo img{width:170px}h1{font-size:46px}.benefits{grid-template-columns:1fr}.trust{gap:22px;flex-wrap:wrap}.hero-shot img{transform:none}footer{gap:18px;flex-direction:column}}
+
+/* Formulario de solicitud de demostración OX360 */
+.demo-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,18,15,.72);backdrop-filter:blur(7px)}
+.demo-modal.is-open{display:flex}
+.demo-card{position:relative;width:min(520px,100%);background:#fff;color:#12312b;border-radius:22px;padding:30px;box-shadow:0 24px 80px rgba(0,0,0,.34)}
+.demo-close{position:absolute;top:15px;right:17px;width:36px;height:36px;border:0;border-radius:50%;background:#eef5f2;color:#173a33;font-size:24px;line-height:1;cursor:pointer}
+.demo-card h2{margin:0 42px 8px 0;font-size:29px;line-height:1.12;color:#0d2e27}
+.demo-card .demo-intro{margin:0 0 22px;color:#61746f;font-size:15px;line-height:1.55}
+.demo-field{margin:0 0 16px}
+.demo-field label{display:block;margin:0 0 7px;font-weight:700;font-size:14px;color:#183d35}
+.demo-field input,.demo-field select,.demo-field textarea{width:100%;box-sizing:border-box;border:1px solid #cddbd6;border-radius:11px;background:#fff;color:#15362f;font:inherit;padding:12px 13px;outline:none;transition:border-color .15s,box-shadow .15s}
+.demo-field input:focus,.demo-field select:focus,.demo-field textarea:focus{border-color:#13b981;box-shadow:0 0 0 3px rgba(19,185,129,.13)}
+.demo-field textarea{min-height:105px;resize:vertical}
+.demo-phone{display:grid;grid-template-columns:170px 1fr;gap:10px}
+.demo-submit{width:100%;border:0;border-radius:11px;background:#08a96f;color:#fff;font-weight:800;font-size:15px;padding:14px 18px;cursor:pointer}
+.demo-submit:hover{filter:brightness(.96)}
+.demo-submit:disabled{opacity:.65;cursor:wait}
+.demo-note{margin:10px 0 0;text-align:center;color:#74857f;font-size:12px}
+.demo-status{display:none;margin:15px 0 0;padding:12px 14px;border-radius:10px;font-size:14px;line-height:1.45}
+.demo-status.success{display:block;background:#e9f8f2;color:#126344}
+.demo-status.error{display:block;background:#fff0f0;color:#8a3030}
+.demo-success-view{display:none;text-align:center;padding:18px 0 4px}
+.demo-success-view.is-visible{display:block}
+.demo-success-icon{width:54px;height:54px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;background:#e6f8f1;color:#079665;font-size:28px;font-weight:900}
+.demo-success-view h3{margin:0 0 8px;font-size:25px;color:#0d2e27}
+.demo-success-view p{margin:0;color:#61746f;line-height:1.55}
+@media(max-width:560px){.demo-card{padding:25px 20px}.demo-phone{grid-template-columns:145px 1fr}.demo-card h2{font-size:25px}}
+@media(max-width:410px){.demo-phone{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -37,7 +66,7 @@ footer{padding:28px 0 38px;display:flex;justify-content:space-between;color:#a7b
    <h1>Opera tu negocio<br>con <span>control real</span></h1>
    <p class="lead">Ventas, inventario, caja y reportes en un solo lugar.<br>Simple, práctico y confiable.</p>
    <div class="actions">
-    <a class="btn primary" href="mailto:info@ox360.lat?subject=Solicitud%20de%20demostraci%C3%B3n%20OX360">Solicitar una demostración&nbsp; →</a>
+    <a class="btn primary" href="#" id="openDemoForm">Solicitar una demostración&nbsp; →</a>
     <a class="btn secondary" href="#saber-mas">Saber más</a>
    </div>
    <div class="trust">
@@ -87,5 +116,149 @@ footer{padding:28px 0 38px;display:flex;justify-content:space-between;color:#a7b
 
 <footer class="wrap"><span>SIMPLE. PRÁCTICO. CONFIABLE.</span><span>OX360 &nbsp;|&nbsp; TU NEGOCIO EN CONTROL</span></footer>
 </main>
+
+<div class="demo-modal" id="demoModal" aria-hidden="true">
+  <div class="demo-card" role="dialog" aria-modal="true" aria-labelledby="demoTitle">
+    <button class="demo-close" id="closeDemoForm" type="button" aria-label="Cerrar">×</button>
+
+    <div id="demoFormView">
+      <h2 id="demoTitle">Solicita una demostración</h2>
+      <p class="demo-intro">Déjanos tus datos y nos pondremos en contacto contigo.</p>
+
+      <form id="demoForm">
+        <div class="demo-field">
+          <label for="demoEmail">Correo electrónico *</label>
+          <input id="demoEmail" name="email" type="email" autocomplete="email" required placeholder="tu@correo.com">
+        </div>
+
+        <div class="demo-field">
+          <label for="demoPhone">Teléfono / WhatsApp <span style="font-weight:400;color:#71827d">(opcional)</span></label>
+          <div class="demo-phone">
+            <select id="demoCountryCode" aria-label="Código de país">
+              <option value="+502" selected>Guatemala (+502)</option>
+<option value="+503">El Salvador (+503)</option>
+<option value="+504">Honduras (+504)</option>
+<option value="+505">Nicaragua (+505)</option>
+<option value="+506">Costa Rica (+506)</option>
+<option value="+507">Panamá (+507)</option>
+<option value="+501">Belice (+501)</option>
+<option value="+52">México (+52)</option>
+<option value="+1">Estados Unidos (+1)</option>
+<option value="+1">Canadá (+1)</option>
+<option value="+54">Argentina (+54)</option>
+<option value="+591">Bolivia (+591)</option>
+<option value="+55">Brasil (+55)</option>
+<option value="+56">Chile (+56)</option>
+<option value="+57">Colombia (+57)</option>
+<option value="+593">Ecuador (+593)</option>
+<option value="+595">Paraguay (+595)</option>
+<option value="+51">Perú (+51)</option>
+<option value="+598">Uruguay (+598)</option>
+<option value="+58">Venezuela (+58)</option>
+<option value="+1 809">Rep. Dominicana (+1 809)</option>
+<option value="+1 787">Puerto Rico (+1 787)</option>
+<option value="+53">Cuba (+53)</option>
+<option value="+34">España (+34)</option>
+<option value="+44">Reino Unido (+44)</option>
+<option value="+33">Francia (+33)</option>
+<option value="+49">Alemania (+49)</option>
+<option value="+39">Italia (+39)</option>
+<option value="+351">Portugal (+351)</option>
+            </select>
+            <input id="demoPhone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="Número de teléfono">
+          </div>
+        </div>
+
+        <div class="demo-field">
+          <label for="demoMessage">Mensaje <span style="font-weight:400;color:#71827d">(opcional)</span></label>
+          <textarea id="demoMessage" name="message" placeholder="Cuéntanos brevemente qué necesitas o qué tipo de negocio tienes."></textarea>
+        </div>
+
+        <button class="demo-submit" id="demoSubmit" type="submit">Solicitar demostración</button>
+        <p class="demo-note">Usaremos estos datos únicamente para responder a tu solicitud.</p>
+        <div class="demo-status" id="demoStatus" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <div class="demo-success-view" id="demoSuccessView">
+      <div class="demo-success-icon">✓</div>
+      <h3>¡Solicitud recibida!</h3>
+      <p>Gracias por tu interés en OX360.<br>Nos pondremos en contacto contigo pronto.</p>
+    </div>
+  </div>
+</div>
+
+
+<script>
+(function(){
+  const modal = document.getElementById('demoModal');
+  const openBtn = document.getElementById('openDemoForm');
+  const closeBtn = document.getElementById('closeDemoForm');
+  const form = document.getElementById('demoForm');
+  const submitBtn = document.getElementById('demoSubmit');
+  const status = document.getElementById('demoStatus');
+  const formView = document.getElementById('demoFormView');
+  const successView = document.getElementById('demoSuccessView');
+  const emailInput = document.getElementById('demoEmail');
+
+  function openModal(e){
+    if(e) e.preventDefault();
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    setTimeout(()=>emailInput.focus(),50);
+  }
+  function closeModal(){
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+  }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('is-open')) closeModal(); });
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    status.className='demo-status';
+    status.textContent='';
+    submitBtn.disabled=true;
+    submitBtn.textContent='Enviando…';
+
+    const code = document.getElementById('demoCountryCode').value;
+    const phone = document.getElementById('demoPhone').value.trim();
+    const message = document.getElementById('demoMessage').value.trim();
+
+    const data = new FormData();
+    data.append('access_key','3a2a8072-e413-46f3-bb80-3c67d32de3c2');
+    data.append('subject','Nueva solicitud de demostración — OX360');
+    data.append('from_name','Sitio web OX360');
+    data.append('email', emailInput.value.trim());
+    data.append('telefono_whatsapp', phone ? (code + ' ' + phone) : 'No proporcionado');
+    data.append('message', message || 'Sin mensaje adicional');
+
+    try{
+      const response = await fetch('https://api.web3forms.com/submit', {method:'POST', body:data});
+      const result = await response.json();
+      if(result.success){
+        form.reset();
+        document.getElementById('demoCountryCode').value='+502';
+        formView.style.display='none';
+        successView.classList.add('is-visible');
+      }else{
+        throw new Error(result.message || 'No se pudo enviar');
+      }
+    }catch(err){
+      status.textContent='No pudimos enviar la solicitud. Por favor, inténtalo de nuevo.';
+      status.className='demo-status error';
+    }finally{
+      submitBtn.disabled=false;
+      submitBtn.textContent='Solicitar demostración';
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
