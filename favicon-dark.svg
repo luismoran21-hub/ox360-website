@@ -1,3 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="440 -20 550 520">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M970 4H823L734 114L733 117L800 210L970 4Z" fill="#9B9CA0"/><path fill-rule="evenodd" clip-rule="evenodd" d="M490 5L651 243L459 465H612L721 340L809 465H952L887 373L642 4L490 5Z" fill="white"/>
+<svg width="540" height="540" viewBox="505 55 540 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M561 102L721 327L527 552H676L791 421L885 552H1029L702 102H561Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M518 545H668L519 543L521 541L518 545Z" fill="#9B9CA0"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1022 545L1021 542L1020 545H877H1022Z" fill="#9B9CA0"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M97 393L98 394L100 401L99 397L98 394L97 393Z" fill="#9B9CA0"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M207 384L208 385L210 392L209 388L208 385L207 384Z" fill="#9B9CA0"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1032 93L888 94L881 101L793 205L817 236L858 293L861 295L916 229L1017 112L1032 93Z" fill="#9B9CA0"/>
 </svg>
